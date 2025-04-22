@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../core/utils/app_colors.dart';
+import '../core/utils/responsive_utils.dart';
 import '../core/utils/styles.dart';
 
 class CustomButton extends StatelessWidget {
@@ -15,10 +14,12 @@ class CustomButton extends StatelessWidget {
   final IconData? icon;
   final Color? iconColor;
   final bool isLoading;
+  final ResponsiveUtils utils;
 
   const CustomButton({
     required this.text,
     required this.onPressed,
+    required this.utils,
     this.color,
     this.textColor,
     this.height,
@@ -34,17 +35,20 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: width ?? double.infinity,
-      height: height ?? 50.h,
+      height: height ?? utils.responsiveElementHeight(50),
       child: ElevatedButton(
         onPressed: isLoading ? null : onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: color ?? AppColors.actionButton,
-          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+          padding: utils.responsivePadding(horizontal: 12, vertical: 8),
           shape: RoundedRectangleBorder(
             side: BorderSide(color: textColor ?? Colors.white),
-            borderRadius: BorderRadius.circular(borderRadius ?? 12.r),
+            borderRadius: BorderRadius.circular(
+              borderRadius ?? utils.responsiveElementWidth(12),
+            ),
           ),
           elevation: 1,
+          shadowColor: AppColors.actionButton.withOpacity(0.3),
         ),
         child: isLoading
             ? const CircularProgressIndicator(color: Colors.white)
@@ -54,14 +58,18 @@ class CustomButton extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     if (icon != null) ...[
-                      Icon(icon, color: iconColor ?? Colors.white, size: 20.w),
-                      SizedBox(width: 6.w),
+                      Icon(
+                        icon,
+                        color: iconColor ?? Colors.white,
+                        size: utils.responsiveElementWidth(20),
+                      ),
+                      SizedBox(width: utils.responsiveElementWidth(6)),
                     ],
                     Text(
                       text,
                       style: FontStyles.font14Weight400RightAligned.copyWith(
                         color: textColor ?? Colors.white,
-                        fontSize: 14.sp,
+                        fontSize: utils.responsiveTextScale(14),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
