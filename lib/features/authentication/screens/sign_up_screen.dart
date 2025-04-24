@@ -56,21 +56,6 @@ class _SignUpScreenState extends State<SignUpScreen>
     );
   }
 
-  BoxDecoration _buildContainerDecoration() {
-    return BoxDecoration(
-      color: AppColors.veryLightGrey.withOpacity(0.9),
-      borderRadius: BorderRadius.circular(20),
-      boxShadow: [
-        BoxShadow(
-          color: AppColors.textColor.withOpacity(0.1),
-          blurRadius: 20,
-          offset: const Offset(0, 10),
-        ),
-      ],
-      border: Border.all(color: AppColors.primaryColor.withOpacity(0.3)),
-    );
-  }
-
   void _handleSignUp(ResponsiveUtils utils) {
     final name = _nameController.text.trim();
     final email = _emailController.text.trim();
@@ -111,15 +96,15 @@ class _SignUpScreenState extends State<SignUpScreen>
           child: Column(
             children: [
               SizedBox(height: utils.responsiveElementHeight(40)),
-                AnimationUtils.slide(
+              AnimationUtils.slide(
                 controller: _animationController,
-                child:  CustomTitle(
-                text:   "إنشاء حساب",
-                controller: _animationController,
-                utils: utils,
+                child: CustomTitle(
+                  text: "إنشاء حساب",
+                  controller: _animationController,
+                  utils: utils,
+                ),
               ),
-              ),
-             
+
               SizedBox(height: utils.responsiveElementHeight(40)),
               Expanded(
                 child: Padding(
@@ -127,53 +112,49 @@ class _SignUpScreenState extends State<SignUpScreen>
                   child: AnimationUtils.slide(
                     controller: _animationController,
                     beginOffset: const Offset(0.5, 0.0),
-                    child: Container(
-                      padding: utils.responsivePadding(
-                        horizontal: 20,
-                        vertical: 30,
-                      ),
-                      decoration: _buildContainerDecoration(),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          AuthTextFormField(
-                            label: 'الاسم',
-                            hintText: 'أدخل اسمك',
-                            textInputType: TextInputType.name,
-                            controller: _nameController,
-                          ),
-                          SizedBox(height: utils.responsiveElementHeight(16)),
-                          AuthTextFormField(
-                            label: 'البريد الإلكتروني',
-                            hintText: 'example@mail.com',
-                            textInputType: TextInputType.emailAddress,
-                            controller: _emailController,
-                          ),
-                          SizedBox(height: utils.responsiveElementHeight(16)),
-                          AuthTextFormField(
-                            label: 'كلمة المرور',
-                            hintText: '********',
-                            obscureText: !_isPasswordVisible,
-                            suffixIcon:
-                                _isPasswordVisible
-                                    ? Icons.visibility
-                                    : Icons.visibility_off_outlined,
-                            suffixTap: () {
-                              setState(() {
-                                _isPasswordVisible = !_isPasswordVisible;
-                              });
-                            },
-                            textInputType: TextInputType.visiblePassword,
-                            controller: _passwordController,
-                          ),
-                          SizedBox(height: utils.responsiveElementHeight(24)),
-                          CustomButton(
-                            text: 'إنشاء حساب',
-                            onPressed: () => _handleSignUp(utils),
-                            utils: utils,
-                          ),
-                          SizedBox(height: utils.responsiveElementHeight(24)),
-                          Row(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        AuthTextFormField(
+                          label: 'الاسم',
+                          hintText: 'أدخل اسمك',
+                          textInputType: TextInputType.name,
+                          controller: _nameController,
+                        ),
+                        SizedBox(height: utils.responsiveElementHeight(16)),
+                        AuthTextFormField(
+                          label: 'البريد الإلكتروني',
+                          hintText: 'example@mail.com',
+                          textInputType: TextInputType.emailAddress,
+                          controller: _emailController,
+                        ),
+                        SizedBox(height: utils.responsiveElementHeight(16)),
+                        AuthTextFormField(
+                          label: 'كلمة المرور',
+                          hintText: '********',
+                          obscureText: !_isPasswordVisible,
+                          suffixIcon:
+                              _isPasswordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off_outlined,
+                          suffixTap: () {
+                            setState(() {
+                              _isPasswordVisible = !_isPasswordVisible;
+                            });
+                          },
+                          textInputType: TextInputType.visiblePassword,
+                          controller: _passwordController,
+                        ),
+                        SizedBox(height: utils.responsiveElementHeight(24)),
+                        CustomButton(
+                          text: 'إنشاء حساب',
+                          onPressed: () => _handleSignUp(utils),
+                          utils: utils,
+                        ),
+                        SizedBox(height: utils.responsiveElementHeight(24)),
+                        Directionality(
+                          textDirection: TextDirection.rtl,
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
@@ -181,6 +162,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                                 style: TextStyle(
                                   fontSize: utils.responsiveTextScale(14),
                                   color: AppColors.textColor2,
+                                  fontFamily: "DGAgnadeen",
                                 ),
                               ),
                               GestureDetector(
@@ -194,14 +176,15 @@ class _SignUpScreenState extends State<SignUpScreen>
                                   style: TextStyle(
                                     fontSize: utils.responsiveTextScale(14),
                                     color: AppColors.primaryColor,
+                                    fontFamily: "DGAgnadeen",
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
                               ),
                             ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),

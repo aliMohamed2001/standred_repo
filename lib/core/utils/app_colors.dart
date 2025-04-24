@@ -2,19 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class AppColors {
-  static Color actionButton = HexColor('#53BA63');
-  static Color textColor = HexColor('#080708');
-  static Color textColor2 = HexColor('#969696');
-  static Color iconeye = HexColor('#F9FAFB');
-  static Color cardgoods = HexColor('#4E4C4F');
-  static Color cardgoods2 = HexColor('#769274');
-  static Color cardgoods3 = HexColor('#F3F4F5');
-  static Color cardCustomer = HexColor('#D2D3D4');
-  static Color primaryColor = HexColor('#124DF5');
+  static Color actionButton = HexColor('#1E56A0');
+  static Color textColor = HexColor('#163172');
+  static Color textColor2 = HexColor('#1E56A0');
+  static Color iconeye = HexColor('#F6F6F6');
+  static Color cardgoods = HexColor('#163172');
+  static Color cardgoods2 = HexColor('#1E56A0');
+  static Color cardgoods3 = HexColor('#D6E4F0');
+  static Color cardCustomer = HexColor('#F6F6F6');
+  static Color primaryColor = HexColor('#163172');
   static Color redColor = HexColor('#F21616');
-  static Color veryLightGrey = HexColor('#F1F1F1');
+  static Color veryLightGrey = HexColor('#F6F6F6');
   static Color orange100 = HexColor('#EE9300');
-  static Color blue100 = HexColor('#2377D1');
-  static Color sandText = HexColor('#40444C');
-  static Color sandText2 = HexColor('#666666');
+  static Color blue100 = HexColor('#1E56A0');
+  static Color sandText = HexColor('#163172');
+  static Color sandText2 = HexColor('#1E56A0');
+  static Color whiteColor = HexColor('#FFFFFF');
 }

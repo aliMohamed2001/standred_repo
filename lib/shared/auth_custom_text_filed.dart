@@ -33,7 +33,7 @@ class AuthTextFormField extends StatefulWidget {
     this.enabled = true,
     this.hintText,
     this.height = 55.0,
-    this.borderRadius = 6.0,
+    this.borderRadius = 14.0,
     this.onChanged,
     this.suffixIconColor,
     this.maxLines = 1,
@@ -99,7 +99,7 @@ class _AuthTextFormFieldState extends State<AuthTextFormField> {
             style: responsiveUtils.responsiveTextStyle(
               FontStyles.font16Weight400Text.copyWith(
                 color: AppColors.textColor,
-                fontFamily: 'zoom_app',
+                fontFamily: 'DGAgnadeen',
                 fontSize: 14,
               ),
             ),
@@ -121,11 +121,54 @@ class _AuthTextFormFieldState extends State<AuthTextFormField> {
               maxLines: widget.maxLines,
               focusNode: _focusNode,
               decoration: InputDecoration(
-                contentPadding: responsiveUtils.responsivePadding(
-                  vertical: 16.0,
-                  horizontal: 20.0,
-                ),
                 hintText: widget.hintText,
+                hintStyle: responsiveUtils.responsiveTextStyle(
+                  TextStyle(
+                    color: AppColors.textColor2,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: "DGAgnadeen",
+                  ),
+                ),
+                filled: true,
+                fillColor: AppColors.textColor.withOpacity(0.1),
+                contentPadding: responsiveUtils.responsivePadding(
+                  vertical: 14.0,
+                  horizontal: 16.0,
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: responsiveUtils.responsiveBorderRadius(
+                    widget.borderRadius,
+                  ),
+                  borderSide: BorderSide.none,
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: responsiveUtils.responsiveBorderRadius(
+                    widget.borderRadius,
+                  ),
+                  borderSide: BorderSide(
+                    color: AppColors.primaryColor,
+                    width: 1.5,
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: responsiveUtils.responsiveBorderRadius(
+                    widget.borderRadius,
+                  ),
+                  borderSide: BorderSide.none,
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderRadius: responsiveUtils.responsiveBorderRadius(
+                    widget.borderRadius,
+                  ),
+                  borderSide: const BorderSide(color: Colors.redAccent),
+                ),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderRadius: responsiveUtils.responsiveBorderRadius(
+                    widget.borderRadius,
+                  ),
+                  borderSide: const BorderSide(color: Colors.redAccent),
+                ),
                 suffixIcon:
                     widget.obscureText
                         ? IconButton(
@@ -151,21 +194,6 @@ class _AuthTextFormFieldState extends State<AuthTextFormField> {
                         )
                         : null,
                 isDense: true,
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: responsiveUtils.responsiveBorderRadius(
-                    widget.borderRadius,
-                  ),
-                  borderSide: BorderSide(
-                    width: 2,
-                    color: AppColors.actionButton,
-                  ),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.textColor2),
-                  borderRadius: responsiveUtils.responsiveBorderRadius(
-                    widget.borderRadius,
-                  ),
-                ),
                 errorStyle: responsiveUtils.responsiveTextStyle(
                   const TextStyle(color: Colors.red),
                 ),

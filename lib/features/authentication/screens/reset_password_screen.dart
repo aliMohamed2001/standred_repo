@@ -15,7 +15,8 @@ class ResetPasswordScreen extends StatefulWidget {
   State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
 }
 
-class _ResetPasswordScreenState extends State<ResetPasswordScreen> with SingleTickerProviderStateMixin {
+class _ResetPasswordScreenState extends State<ResetPasswordScreen>
+    with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
@@ -54,21 +55,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> with SingleTi
     );
   }
 
-  BoxDecoration _buildContainerDecoration() {
-    return BoxDecoration(
-      color: AppColors.veryLightGrey.withOpacity(0.9),
-      borderRadius: BorderRadius.circular(20),
-      boxShadow: [
-        BoxShadow(
-          color: AppColors.textColor.withOpacity(0.1),
-          blurRadius: 20,
-          offset: const Offset(0, 10),
-        ),
-      ],
-      border: Border.all(color: AppColors.primaryColor.withOpacity(0.3)),
-    );
-  }
-
   void _handleResetPassword(ResponsiveUtils utils) {
     final password = _passwordController.text.trim();
     final confirmPassword = _confirmPasswordController.text.trim();
@@ -104,15 +90,15 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> with SingleTi
           child: Column(
             children: [
               SizedBox(height: utils.responsiveElementHeight(40)),
-                AnimationUtils.slide(
+              AnimationUtils.slide(
                 controller: _animationController,
-                child:  CustomTitle(
-                text:  "إعادة تعيين كلمة المرور",
-                controller: _animationController,
-                utils: utils,
+                child: CustomTitle(
+                  text: "إعادة تعيين كلمة المرور",
+                  controller: _animationController,
+                  utils: utils,
+                ),
               ),
-              ),
-             
+
               SizedBox(height: utils.responsiveElementHeight(40)),
               Expanded(
                 child: Padding(
@@ -121,8 +107,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> with SingleTi
                     controller: _animationController,
                     beginOffset: const Offset(0.5, 0.0),
                     child: Container(
-                      padding: utils.responsivePadding(horizontal: 20, vertical: 30),
-                      decoration: _buildContainerDecoration(),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -130,11 +114,14 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> with SingleTi
                             label: 'كلمة المرور الجديدة',
                             hintText: '********',
                             obscureText: !_isPasswordVisible,
-                            suffixIcon:   _isPasswordVisible ? Icons.visibility : Icons.visibility_off_outlined,
+                            suffixIcon:
+                                _isPasswordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off_outlined,
                             suffixTap: () {
-                                setState(() {
-                                  _isPasswordVisible = !_isPasswordVisible;
-                                });
+                              setState(() {
+                                _isPasswordVisible = !_isPasswordVisible;
+                              });
                             },
                             textInputType: TextInputType.visiblePassword,
                             controller: _passwordController,
@@ -144,11 +131,15 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> with SingleTi
                             label: 'تأكيد كلمة المرور',
                             hintText: '********',
                             obscureText: !_isConfirmPasswordVisible,
-                            suffixIcon:   _isConfirmPasswordVisible ? Icons.visibility : Icons.visibility_off_outlined,
+                            suffixIcon:
+                                _isConfirmPasswordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off_outlined,
                             suffixTap: () {
-                                setState(() {
-                                  _isConfirmPasswordVisible = !_isConfirmPasswordVisible;
-                                });
+                              setState(() {
+                                _isConfirmPasswordVisible =
+                                    !_isConfirmPasswordVisible;
+                              });
                             },
                             textInputType: TextInputType.visiblePassword,
                             controller: _confirmPasswordController,

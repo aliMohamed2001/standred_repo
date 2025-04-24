@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 class ResponsiveUtils {
@@ -52,7 +51,7 @@ class ResponsiveUtils {
     _orientation = mediaQuery.orientation;
     _isPortrait = _orientation == Orientation.portrait;
     _isLandscape = _orientation == Orientation.landscape;
-    _aspectRatio = _screenHeight > 0 ? _screenWidth / _screenHeight : 1.0; 
+    _aspectRatio = _screenHeight > 0 ? _screenWidth / _screenHeight : 1.0;
   }
 
   double get shortestSide => _shortestSide;
@@ -71,19 +70,26 @@ class ResponsiveUtils {
   double get aspectRatio => _aspectRatio;
 
   List<DisplayFeature> get displayFeatures => mediaQuery.displayFeatures;
-  bool get hasFold => displayFeatures.any((feature) => feature.type == DisplayFeatureType.fold);
-  bool get hasHinge => displayFeatures.any((feature) => feature.type == DisplayFeatureType.hinge);
+  bool get hasFold =>
+      displayFeatures.any((feature) => feature.type == DisplayFeatureType.fold);
+  bool get hasHinge => displayFeatures.any(
+    (feature) => feature.type == DisplayFeatureType.hinge,
+  );
   Rect get foldBounds {
     final foldFeature = displayFeatures.firstWhere(
-      (feature) => feature.type == DisplayFeatureType.fold || feature.type == DisplayFeatureType.hinge,
-      orElse: () => const DisplayFeature(
-        bounds: Rect.zero,
-        type: DisplayFeatureType.unknown,
-        state: DisplayFeatureState.unknown,
-      ),
+      (feature) =>
+          feature.type == DisplayFeatureType.fold ||
+          feature.type == DisplayFeatureType.hinge,
+      orElse:
+          () => const DisplayFeature(
+            bounds: Rect.zero,
+            type: DisplayFeatureType.unknown,
+            state: DisplayFeatureState.unknown,
+          ),
     );
     return foldFeature.bounds;
   }
+
   bool isInFoldableArea(double position, {bool isVertical = true}) {
     if (!hasFold && !hasHinge) return false;
     final bounds = foldBounds;
@@ -91,18 +97,30 @@ class ResponsiveUtils {
         ? position >= bounds.top && position <= bounds.bottom
         : position >= bounds.left && position <= bounds.right;
   }
+
   List<Rect> splitScreenByFold({bool isVertical = true}) {
-    if (!hasFold && !hasHinge) return [Rect.fromLTWH(0, 0, screenWidth, screenHeight)];
+    if (!hasFold && !hasHinge)
+      return [Rect.fromLTWH(0, 0, screenWidth, screenHeight)];
     final bounds = foldBounds;
     if (isVertical) {
       return [
         Rect.fromLTWH(0, 0, screenWidth, bounds.top),
-        Rect.fromLTWH(0, bounds.bottom, screenWidth, screenHeight - bounds.bottom),
+        Rect.fromLTWH(
+          0,
+          bounds.bottom,
+          screenWidth,
+          screenHeight - bounds.bottom,
+        ),
       ];
     } else {
       return [
         Rect.fromLTWH(0, 0, bounds.left, screenHeight),
-        Rect.fromLTWH(bounds.right, 0, screenWidth - bounds.right, screenHeight),
+        Rect.fromLTWH(
+          bounds.right,
+          0,
+          screenWidth - bounds.right,
+          screenHeight,
+        ),
       ];
     }
   }
@@ -110,10 +128,12 @@ class ResponsiveUtils {
   EdgeInsets get safeAreaPadding => mediaQuery.padding;
   double get devicePixelRatio => mediaQuery.devicePixelRatio;
   double widthPercentage(double percentage) => screenWidth * (percentage / 100);
-  double heightPercentage(double percentage) => screenHeight * (percentage / 100);
+  double heightPercentage(double percentage) =>
+      screenHeight * (percentage / 100);
   double scaleBySize(double baseSize) {
     return baseSize * (shortestSide / 400);
   }
+
   double scaleByDensity(double baseSize) => baseSize * devicePixelRatio;
   double responsiveAspectRatio(double baseAspectRatio) {
     if (isLargeDesktop) return baseAspectRatio * 1.2;
@@ -121,19 +141,22 @@ class ResponsiveUtils {
     if (isTablet) return baseAspectRatio * 1.0;
     return baseAspectRatio * 0.9;
   }
+
   double responsiveTextScale(double baseFontSize) {
     final systemTextScale = mediaQuery.textScaler.scale(1.0);
-    final deviceScale = isLargeDesktop
-        ? 1.3
-        : isDesktop
+    final deviceScale =
+        isLargeDesktop
+            ? 1.3
+            : isDesktop
             ? 1.2
             : isTablet
-                ? 1.0
-                : isMediumMobile
-                    ? 0.9
-                    : 0.8;
+            ? 1.0
+            : isMediumMobile
+            ? 0.9
+            : 0.8;
     return baseFontSize * deviceScale * systemTextScale;
   }
+
   Text responsiveText(
     String text, {
     TextStyle? style,
@@ -148,70 +171,89 @@ class ResponsiveUtils {
       maxLines: maxLines,
       overflow: overflow,
       textScaler: TextScaler.linear(
-        isLargeDesktop ? 1.3 : isDesktop ? 1.2 : isTablet ? 1.0 : 0.9,
+        isLargeDesktop
+            ? 1.3
+            : isDesktop
+            ? 1.2
+            : isTablet
+            ? 1.0
+            : 0.9,
       ),
     );
   }
+
   TextStyle responsiveTextStyle(TextStyle baseStyle) {
     return baseStyle.copyWith(
       fontSize: responsiveTextScale(baseStyle.fontSize ?? 14),
       color: baseStyle.color ?? (isDarkMode ? Colors.white : Colors.black),
-      fontWeight: isLargeDesktop
-          ? FontWeight.w500
-          : isDesktop
+      fontWeight:
+          isLargeDesktop
+              ? FontWeight.w500
+              : isDesktop
               ? FontWeight.w400
               : FontWeight.normal,
       letterSpacing: isMobile ? 0.5 : 1.0,
     );
   }
+
   double responsiveImageSize(double baseSize) {
     if (isLargeDesktop) return baseSize * 1.6;
     if (isDesktop) return baseSize * 1.5;
     if (isTablet) return baseSize * 1.2;
     return baseSize;
   }
+
   double responsiveIconSize(double baseSize) {
     if (isLargeDesktop) return baseSize * 1.6;
     if (isDesktop) return baseSize * 1.5;
     if (isTablet) return baseSize * 1.2;
     return baseSize;
   }
-  Icon responsiveIcon(
-    IconData icon, {
-    Color? color,
-    double? baseSize,
-  }) {
+
+  Icon responsiveIcon(IconData icon, {Color? color, double? baseSize}) {
     return Icon(
       icon,
       size: responsiveIconSize(baseSize ?? 24),
       color: color ?? (isDarkMode ? Colors.white : Colors.black),
     );
   }
+
   BorderRadius responsiveBorderRadius(double baseRadius) {
-    double scale = isLargeDesktop ? 1.6 : isDesktop ? 1.5 : isTablet ? 1.2 : 1.0;
+    double scale =
+        isLargeDesktop
+            ? 1.6
+            : isDesktop
+            ? 1.5
+            : isTablet
+            ? 1.2
+            : 1.0;
     return BorderRadius.circular(baseRadius * scale);
   }
+
   double responsiveAppBarHeight() {
     return isLargeDesktop
         ? 80
         : isDesktop
-            ? 70
-            : isTablet
-                ? 60
-                : 56;
+        ? 70
+        : isTablet
+        ? 60
+        : 56;
   }
+
   double responsiveElementHeight(double baseHeight) {
     if (isLargeDesktop) return baseHeight * 1.3;
     if (isDesktop) return baseHeight * 1.2;
     if (isTablet) return baseHeight * 1.1;
     return baseHeight;
   }
+
   double responsiveElementWidth(double baseWidth) {
     if (isLargeDesktop) return baseWidth * 1.3;
     if (isDesktop) return baseWidth * 1.2;
     if (isTablet) return baseWidth * 1.1;
     return baseWidth;
   }
+
   EdgeInsets safePadding({
     double? all,
     double? horizontal,
@@ -221,7 +263,14 @@ class ResponsiveUtils {
     double? left,
     double? right,
   }) {
-    double scale = isLargeDesktop ? 1.6 : isDesktop ? 1.5 : isTablet ? 1.2 : 1.0;
+    double scale =
+        isLargeDesktop
+            ? 1.6
+            : isDesktop
+            ? 1.5
+            : isTablet
+            ? 1.2
+            : 1.0;
     final safePadding = safeAreaPadding;
     return EdgeInsets.only(
       top: (top ?? vertical ?? all ?? 0) * scale + safePadding.top,
@@ -230,6 +279,7 @@ class ResponsiveUtils {
       right: (right ?? horizontal ?? all ?? 0) * scale + safePadding.right,
     );
   }
+
   EdgeInsets responsivePadding({
     double? all,
     double? horizontal,
@@ -239,7 +289,14 @@ class ResponsiveUtils {
     double? left,
     double? right,
   }) {
-    double scale = isLargeDesktop ? 1.6 : isDesktop ? 1.5 : isTablet ? 1.2 : 1.0;
+    double scale =
+        isLargeDesktop
+            ? 1.6
+            : isDesktop
+            ? 1.5
+            : isTablet
+            ? 1.2
+            : 1.0;
     return EdgeInsets.only(
       top: (top ?? vertical ?? all ?? 0) * scale,
       bottom: (bottom ?? vertical ?? all ?? 0) * scale,
@@ -247,6 +304,7 @@ class ResponsiveUtils {
       right: (right ?? horizontal ?? all ?? 0) * scale,
     );
   }
+
   EdgeInsets responsiveMargin({
     double? all,
     double? horizontal,
@@ -256,7 +314,14 @@ class ResponsiveUtils {
     double? left,
     double? right,
   }) {
-    double scale = isLargeDesktop ? 1.6 : isDesktop ? 1.5 : isTablet ? 1.2 : 1.0;
+    double scale =
+        isLargeDesktop
+            ? 1.6
+            : isDesktop
+            ? 1.5
+            : isTablet
+            ? 1.2
+            : 1.0;
     return EdgeInsets.only(
       top: (top ?? vertical ?? all ?? 0) * scale,
       bottom: (bottom ?? vertical ?? all ?? 0) * scale,
@@ -264,16 +329,25 @@ class ResponsiveUtils {
       right: (right ?? horizontal ?? all ?? 0) * scale,
     );
   }
+
   Alignment responsiveAlignment() {
     return isRTL ? Alignment.centerRight : Alignment.centerLeft;
   }
+
   BoxShadow responsiveBoxShadow({
     Color? color,
     double? blurRadius,
     double? spreadRadius,
     Offset? offset,
   }) {
-    double scale = isLargeDesktop ? 1.6 : isDesktop ? 1.5 : isTablet ? 1.2 : 1.0;
+    double scale =
+        isLargeDesktop
+            ? 1.6
+            : isDesktop
+            ? 1.5
+            : isTablet
+            ? 1.2
+            : 1.0;
     return BoxShadow(
       color: color ?? Colors.black.withOpacity(0.2),
       blurRadius: (blurRadius ?? 4) * scale,
@@ -281,6 +355,7 @@ class ResponsiveUtils {
       offset: offset ?? const Offset(0, 2),
     );
   }
+
   Widget responsiveContainer({
     required Widget child,
     double? widthPercentage,
@@ -292,18 +367,26 @@ class ResponsiveUtils {
     List<BoxShadow>? boxShadow,
   }) {
     return Container(
-      width: widthPercentage != null ? this.widthPercentage(widthPercentage) : null,
-      height: heightPercentage != null ? this.heightPercentage(heightPercentage) : null,
+      width:
+          widthPercentage != null
+              ? this.widthPercentage(widthPercentage)
+              : null,
+      height:
+          heightPercentage != null
+              ? this.heightPercentage(heightPercentage)
+              : null,
       padding: padding ?? responsivePadding(all: 8),
       margin: margin,
       decoration: BoxDecoration(
         color: color ?? backgroundColor,
-        borderRadius: borderRadius != null ? responsiveBorderRadius(borderRadius) : null,
+        borderRadius:
+            borderRadius != null ? responsiveBorderRadius(borderRadius) : null,
         boxShadow: boxShadow ?? [responsiveBoxShadow()],
       ),
       child: child,
     );
   }
+
   Widget responsiveButton({
     required VoidCallback onPressed,
     required String text,
@@ -346,6 +429,7 @@ class ResponsiveUtils {
       ),
     );
   }
+
   Widget responsiveTextButton({
     required VoidCallback onPressed,
     required String text,
@@ -370,6 +454,7 @@ class ResponsiveUtils {
       ),
     );
   }
+
   Widget responsiveOutlinedButton({
     required VoidCallback onPressed,
     required String text,
@@ -389,9 +474,7 @@ class ResponsiveUtils {
           color: borderColor ?? primaryColor,
           width: isMobile ? 1 : 2,
         ),
-        shape: RoundedRectangleBorder(
-          borderRadius: responsiveBorderRadius(8),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: responsiveBorderRadius(8)),
       ),
       child: responsiveText(
         text,
@@ -402,6 +485,7 @@ class ResponsiveUtils {
       ),
     );
   }
+
   int gridColumns() {
     if (isLargeDesktop) return 5;
     if (isDesktop) return 4;
@@ -409,12 +493,14 @@ class ResponsiveUtils {
     if (isMediumMobile) return 2;
     return 1;
   }
+
   double responsiveGridSpacing() {
     if (isLargeDesktop) return 16;
     if (isDesktop) return 12;
     if (isTablet) return 8;
     return 4;
   }
+
   SliverGridDelegate responsiveGridDelegate({
     double childAspectRatio = 1.0,
     double? crossAxisSpacing,
@@ -428,15 +514,26 @@ class ResponsiveUtils {
       mainAxisSpacing: mainAxisSpacing ?? spacing,
     );
   }
+
   double get smallSpace => heightPercentage(isMobile ? 1 : 0.8);
   double get mediumSpace => heightPercentage(isMobile ? 2 : 1.5);
   double get largeSpace => heightPercentage(isMobile ? 4 : 3);
-  Widget verticalSpace(double percentage) => SizedBox(height: heightPercentage(percentage));
-  Widget horizontalSpace(double percentage) => SizedBox(width: widthPercentage(percentage));
+  Widget verticalSpace(double percentage) =>
+      SizedBox(height: heightPercentage(percentage));
+  Widget horizontalSpace(double percentage) =>
+      SizedBox(width: widthPercentage(percentage));
   double responsiveAnimationDuration() {
     return isMobile ? 200 : 300;
   }
+
   double responsiveAnimationScale(double baseScale) {
-    return baseScale * (isLargeDesktop ? 1.3 : isDesktop ? 1.2 : isTablet ? 1.1 : 1.0);
+    return baseScale *
+        (isLargeDesktop
+            ? 1.3
+            : isDesktop
+            ? 1.2
+            : isTablet
+            ? 1.1
+            : 1.0);
   }
 }

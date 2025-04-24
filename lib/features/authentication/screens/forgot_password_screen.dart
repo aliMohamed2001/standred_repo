@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:new_standred/core/utils/app_colors.dart';
 import 'package:new_standred/core/utils/app_routes.dart' show AppRoutes;
 import 'package:new_standred/core/utils/responsive_utils.dart';
+import 'package:new_standred/features/authentication/widgets/gradient_bskground.dart'
+    show buildGradientBackground;
 import 'package:new_standred/shared/animation_utils.dart' show AnimationUtils;
 import 'package:new_standred/shared/auth_custom_text_filed.dart';
 import 'package:new_standred/shared/custom_title.dart' show CustomTitle;
@@ -15,7 +17,8 @@ class ForgotPasswordScreen extends StatefulWidget {
   State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
 }
 
-class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> with SingleTickerProviderStateMixin {
+class _ForgotPasswordScreenState extends State<ForgotPasswordScreen>
+    with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   final _emailController = TextEditingController();
 
@@ -33,36 +36,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> with Single
     _animationController.dispose();
     _emailController.dispose();
     super.dispose();
-  }
-
-  BoxDecoration _buildGradientBackground() {
-    return BoxDecoration(
-      gradient: LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        colors: [
-          AppColors.blue100.withOpacity(0.3),
-          AppColors.veryLightGrey,
-          AppColors.actionButton.withOpacity(0.2),
-        ],
-        stops: const [0.0, 0.5, 1.0],
-      ),
-    );
-  }
-
-  BoxDecoration _buildContainerDecoration() {
-    return BoxDecoration(
-      color: AppColors.veryLightGrey.withOpacity(0.9),
-      borderRadius: BorderRadius.circular(20),
-      boxShadow: [
-        BoxShadow(
-          color: AppColors.textColor.withOpacity(0.1),
-          blurRadius: 20,
-          offset: const Offset(0, 10),
-        ),
-      ],
-      border: Border.all(color: AppColors.primaryColor.withOpacity(0.3)),
-    );
   }
 
   void _handleForgotPassword(ResponsiveUtils utils) {
@@ -90,20 +63,20 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> with Single
     return Scaffold(
       body: Container(
         height: MediaQuery.of(context).size.height,
-        decoration: _buildGradientBackground(),
+        decoration: buildGradientBackground(),
         child: SafeArea(
           child: Column(
             children: [
               SizedBox(height: utils.responsiveElementHeight(40)),
-                AnimationUtils.scale(
+              AnimationUtils.scale(
                 controller: _animationController,
-                child:  CustomTitle(
-                text:   "نسيت كلمة المرور",
-                controller: _animationController,
-                utils: utils,
+                child: CustomTitle(
+                  text: "نسيت كلمة المرور",
+                  controller: _animationController,
+                  utils: utils,
+                ),
               ),
-              ),
-           
+
               SizedBox(height: utils.responsiveElementHeight(40)),
               Expanded(
                 child: Padding(
@@ -112,8 +85,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> with Single
                     controller: _animationController,
                     beginOffset: const Offset(0.5, 0.0),
                     child: Container(
-                      padding: utils.responsivePadding(horizontal: 20, vertical: 30),
-                      decoration: _buildContainerDecoration(),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

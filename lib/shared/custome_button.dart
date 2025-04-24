@@ -71,6 +71,7 @@ class CustomButton extends StatelessWidget {
                         color: textColor ?? Colors.white,
                         fontSize: utils.responsiveTextScale(14),
                         overflow: TextOverflow.ellipsis,
+                        fontFamily:"DGAgnadeen",
                       ),
                     ),
                   ],

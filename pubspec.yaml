@@ -40,6 +40,7 @@ dependencies:
   shared_preferences: ^2.3.2
   shimmer: ^3.0.0
   url_launcher: ^6.3.1
+  easy_localization: ^3.0.7+1
 
 dev_dependencies:
   flutter_test:
@@ -54,7 +55,7 @@ flutter:
     - assets/svg/
 
   fonts:
-    - family: standred
+    - family: DGAgnadeen
       fonts:
         - asset: assets/fonts/DGAgnadeen-Thin.ttf
           weight: 100

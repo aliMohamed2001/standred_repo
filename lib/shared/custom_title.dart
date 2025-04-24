@@ -33,7 +33,7 @@ class CustomTitle extends StatelessWidget {
             fontSize: utils.responsiveTextScale(28),
             fontWeight: FontWeight.w600,
             decorationStyle: TextDecorationStyle.dashed,
-            fontFamily: 'standred',
+            fontFamily: 'DGAgnadeen',
             leadingDistribution: TextLeadingDistribution.even,
             decorationColor: AppColors.primaryColor,
             color: AppColors.textColor2,

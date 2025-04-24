@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:new_standred/core/utils/app_colors.dart';
 import 'package:new_standred/core/utils/app_routes.dart' show AppRoutes;
 import 'package:new_standred/core/utils/responsive_utils.dart';
+import 'package:new_standred/features/authentication/widgets/gradient_bskground.dart';
 import 'package:new_standred/shared/animation_utils.dart' show AnimationUtils;
 import 'package:new_standred/shared/custom_title.dart';
 import 'package:new_standred/shared/custome_button.dart';
@@ -15,9 +16,13 @@ class VerifyOtpScreen extends StatefulWidget {
   State<VerifyOtpScreen> createState() => _VerifyOtpScreenState();
 }
 
-class _VerifyOtpScreenState extends State<VerifyOtpScreen> with SingleTickerProviderStateMixin {
+class _VerifyOtpScreenState extends State<VerifyOtpScreen>
+    with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
-  final List<TextEditingController> _otpControllers = List.generate(4, (_) => TextEditingController());
+  final List<TextEditingController> _otpControllers = List.generate(
+    4,
+    (_) => TextEditingController(),
+  );
   final List<FocusNode> _focusNodes = List.generate(4, (_) => FocusNode());
   bool _isFromForgotPassword = false;
 
@@ -51,36 +56,6 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> with SingleTickerProv
     super.dispose();
   }
 
-  BoxDecoration _buildGradientBackground() {
-    return BoxDecoration(
-      gradient: LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        colors: [
-          AppColors.blue100.withOpacity(0.3),
-          AppColors.veryLightGrey,
-          AppColors.actionButton.withOpacity(0.2),
-        ],
-        stops: const [0.0, 0.5, 1.0],
-      ),
-    );
-  }
-
-  BoxDecoration _buildContainerDecoration() {
-    return BoxDecoration(
-      color: AppColors.veryLightGrey.withOpacity(0.9),
-      borderRadius: BorderRadius.circular(20),
-      boxShadow: [
-        BoxShadow(
-          color: AppColors.textColor.withOpacity(0.1),
-          blurRadius: 20,
-          offset: const Offset(0, 10),
-        ),
-      ],
-      border: Border.all(color: AppColors.primaryColor.withOpacity(0.3)),
-    );
-  }
-
   void _verifyOtp(ResponsiveUtils utils) {
     String otp = _otpControllers.map((controller) => controller.text).join();
     if (otp.length != 4 || !RegExp(r'^\d{4}$').hasMatch(otp)) {
@@ -109,20 +84,20 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> with SingleTickerProv
     return Scaffold(
       body: Container(
         height: MediaQuery.of(context).size.height,
-        decoration: _buildGradientBackground(),
+        decoration: buildGradientBackground(),
         child: SafeArea(
           child: Column(
             children: [
-              SizedBox(height: utils.responsiveElementHeight(40)),  AnimationUtils.slide(
+              SizedBox(height: utils.responsiveElementHeight(40)),
+              AnimationUtils.slide(
                 controller: _animationController,
-                child:  CustomTitle(
-                text:   "التحقق من الرمز",
-                controller: _animationController,
-                utils: utils,
+                child: CustomTitle(
+                  text: "التحقق من الرمز",
+                  controller: _animationController,
+                  utils: utils,
+                ),
               ),
-              ),
-              
-             
+
               SizedBox(height: utils.responsiveElementHeight(40)),
               Expanded(
                 child: Padding(
@@ -130,97 +105,93 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> with SingleTickerProv
                   child: AnimationUtils.slide(
                     controller: _animationController,
                     beginOffset: const Offset(0.5, 0.0),
-                    child: Container(
-                      padding: utils.responsivePadding(horizontal: 20, vertical: 30),
-                      decoration: _buildContainerDecoration(),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          AnimationUtils.fade(
-                            controller: _animationController,
-                            child: Text(
-                              'أدخل رمز التحقق المكون من 4 أرقام\nالذي تم إرساله إلى بريدك الإلكتروني',
-                              style: TextStyle(
-                                fontSize: utils.responsiveTextScale(16),
-                                color: AppColors.textColor2,
-                              ),
-                              textAlign: TextAlign.center,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        AnimationUtils.fade(
+                          controller: _animationController,
+                          child: Text(
+                            'أدخل رمز التحقق المكون من 4 أرقام\nالذي تم إرساله إلى بريدك الإلكتروني',
+                            style: TextStyle(
+                              fontSize: utils.responsiveTextScale(16),
+                              color: AppColors.textColor2,
                             ),
+                            textAlign: TextAlign.center,
                           ),
-                          SizedBox(height: utils.responsiveElementHeight(24)),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: List.generate(4, (index) {
-                              return SizedBox(
-                                width: utils.responsiveElementWidth(50),
-                                child: TextField(
-                                  controller: _otpControllers[index],
-                                  focusNode: _focusNodes[index],
-                                  keyboardType: TextInputType.number,
-                                  textAlign: TextAlign.center,
-                                  maxLength: 1,
-                                  decoration: InputDecoration(
-                                    counterText: '',
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                      borderSide:  BorderSide(
-                                        color: AppColors.actionButton,
-                                        width: 2,
-                                      ),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                      borderSide:  BorderSide(
-                                        color: AppColors.actionButton,
-                                        width: 2,
-                                      ),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                      borderSide:  BorderSide(
-                                        color: AppColors.primaryColor,
-                                        width: 2,
-                                      ),
+                        ),
+                        SizedBox(height: utils.responsiveElementHeight(24)),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: List.generate(4, (index) {
+                            return SizedBox(
+                              width: utils.responsiveElementWidth(50),
+                              child: TextField(
+                                controller: _otpControllers[index],
+                                focusNode: _focusNodes[index],
+                                keyboardType: TextInputType.number,
+                                textAlign: TextAlign.center,
+                                maxLength: 1,
+                                decoration: InputDecoration(
+                                  counterText: '',
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide(
+                                      color: AppColors.actionButton,
+                                      width: 2,
                                     ),
                                   ),
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.digitsOnly,
-                                  ],
-                                  onChanged: (value) {
-                                    if (value.isNotEmpty && index < 3) {
-                                      _focusNodes[index + 1].requestFocus();
-                                    } else if (value.isEmpty && index > 0) {
-                                      _focusNodes[index - 1].requestFocus();
-                                    }
-                                  },
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide(
+                                      color: AppColors.actionButton,
+                                      width: 2,
+                                    ),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide(
+                                      color: AppColors.primaryColor,
+                                      width: 2,
+                                    ),
+                                  ),
                                 ),
-                              );
-                            }),
-                          ),
-                          SizedBox(height: utils.responsiveElementHeight(24)),
-                          CustomButton(
-                            text: 'تحقق',
-                            onPressed: () => _verifyOtp(utils),
-                            utils: utils,
-                          ),
-                          SizedBox(height: utils.responsiveElementHeight(24)),
-                          GestureDetector(
-                            onTap: () {
-                              showSuccessToast('تم إعادة إرسال رمز التحقق');
-                            },
-                            child: Text(
-                              'إعادة إرسال الرمز',
-                              style: TextStyle(
-                                fontSize: utils.responsiveTextScale(14),
-                                color: AppColors.primaryColor,
-                                fontWeight: FontWeight.bold,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.digitsOnly,
+                                ],
+                                onChanged: (value) {
+                                  if (value.isNotEmpty && index < 3) {
+                                    _focusNodes[index + 1].requestFocus();
+                                  } else if (value.isEmpty && index > 0) {
+                                    _focusNodes[index - 1].requestFocus();
+                                  }
+                                },
                               ),
+                            );
+                          }),
+                        ),
+                        SizedBox(height: utils.responsiveElementHeight(24)),
+                        CustomButton(
+                          text: 'تحقق',
+                          onPressed: () => _verifyOtp(utils),
+                          utils: utils,
+                        ),
+                        SizedBox(height: utils.responsiveElementHeight(24)),
+                        GestureDetector(
+                          onTap: () {
+                            showSuccessToast('تم إعادة إرسال رمز التحقق');
+                          },
+                          child: Text(
+                            'إعادة إرسال الرمز',
+                            style: TextStyle(
+                              fontSize: utils.responsiveTextScale(14),
+                              color: AppColors.primaryColor,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
