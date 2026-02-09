@@ -28,27 +28,28 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => ConnectivityCubit(),
-      child: NoInternetHandler(
-        child: ScreenUtilInit(
-          designSize: const Size(375, 812),
-          minTextAdapt: true,
-          splitScreenMode: true,
-          builder: (context, child) {
-            return MaterialApp(
-              debugShowCheckedModeBanner: false,
-              title: 'Standard Repo',
-              locale: context.locale,
-              supportedLocales: context.supportedLocales,
-              localizationsDelegates: context.localizationDelegates,
-              theme: ThemeData(
-                primarySwatch: Colors.blue,
-                fontFamily: AppConstants.fontFamily,
-              ),
-              initialRoute: AppRoutes.splash,
-              onGenerateRoute: AppRoutes.generateRoute,
-            );
-          },
-        ),
+      child: ScreenUtilInit(
+        designSize: const Size(375, 812),
+        minTextAdapt: true,
+        splitScreenMode: true,
+        builder: (context, child) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Standard Repo',
+            locale: context.locale,
+            supportedLocales: context.supportedLocales,
+            localizationsDelegates: context.localizationDelegates,
+            theme: ThemeData(
+              primarySwatch: Colors.blue,
+              fontFamily: AppConstants.fontFamily,
+            ),
+            initialRoute: AppRoutes.splash,
+            onGenerateRoute: AppRoutes.generateRoute,
+             builder: (context, child) {
+          return NoInternetHandler(child: child!);
+        },
+          );
+        },
       ),
     );
   }
