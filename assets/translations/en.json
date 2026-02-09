@@ -1,0 +1,15 @@
+{
+  "app_name": "Standard Repo",
+  "connectionTimeout": "Connection timed out. Please try again.",
+  "sendTimeout": "Request sending timed out. Please try again.",
+  "receiveTimeout": "Response timed out. Please try again.",
+  "noInternetConnection": "No internet connection. Please check your network.",
+  "pleaseCheckYourUrl": "Please check your URL.",
+  "unexpectedError": "An unexpected error occurred. Please try again.",
+  "sessionExpired": "Your session has expired. Please log in again.",
+  "resourceNotFound": "Requested resource not found.",
+  "internalServerError": "Internal server error. Please try again later.",
+  "noInternetTitle": "No Internet Connection",
+  "noInternetDescription": "It seems you're offline. Please check your network connection and try again.",
+  "tryAgain": "Try Again"
+}

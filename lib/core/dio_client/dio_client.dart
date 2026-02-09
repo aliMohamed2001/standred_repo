@@ -1,15 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:new_standred/core/dio_client/api_keys.dart';
-
 import 'endpoints.dart';
 import 'server_exception.dart';
 
 class DioClient {
-  DioClient(
-    this._dio, {
-    this.token,
-    this.language,
-  }) {
+  DioClient(this._dio, {this.language}) {
     _dio
       ..options.baseUrl = Endpoint.apiBaseUrl
       ..options.connectTimeout = Endpoint.connectionTimeout
@@ -21,8 +16,8 @@ class DioClient {
         onRequest: (options, handler) async {
           options.headers[ApiKeys.acceptLanguage] = language ?? 'ar';
           options.headers[ApiKeys.contentType] = 'application/json';
-          options.headers[ApiKeys.authorization] = 'Bearer $token';
-
+          options.headers[ApiKeys.accept] = 'application/json';
+       
           return handler.next(options);
         },
         onResponse: (response, handler) {
@@ -55,12 +50,7 @@ class DioClient {
       final response = await _dio.get<dynamic>(
         url,
         queryParameters: queryParameters,
-        options: options ??
-            Options(
-              headers: {
-                
-              },
-            ),
+        options: options ?? Options(headers: {}),
         cancelToken: cancelToken,
         onReceiveProgress: onReceiveProgress,
       );
@@ -84,9 +74,12 @@ class DioClient {
         url,
         data: data,
         queryParameters: queryParameters,
-        options: options ??
+        options:
+            options ??
             Options(
               headers: {
+                ApiKeys.contentType: 'application/json',
+                ApiKeys.accept: 'application/json',
               },
             ),
         cancelToken: cancelToken,
@@ -113,11 +106,7 @@ class DioClient {
         url,
         data: data,
         queryParameters: queryParameters,
-        options: options ??
-            Options(
-              headers: {
-              },
-            ),
+        options: options ?? Options(headers: {}),
         cancelToken: cancelToken,
         onSendProgress: onSendProgress,
         onReceiveProgress: onReceiveProgress,
@@ -140,11 +129,7 @@ class DioClient {
         url,
         data: data,
         queryParameters: queryParameters,
-        options: options ??
-            Options(
-              headers: {
-              },
-            ),
+        options: options ?? Options(headers: {}),
         cancelToken: cancelToken,
       );
       return response.data;

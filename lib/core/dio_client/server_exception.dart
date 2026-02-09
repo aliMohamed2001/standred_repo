@@ -1,56 +1,74 @@
 import 'package:dio/dio.dart';
-import 'package:new_standred/shared/toast/show_custom_toast.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:new_standred/shared/widgets/toast/custom_toast.dart';
 
 class ServerException implements Exception {
   ServerException({this.message, this.statusCode});
 
-  ServerException.fromDioException(Object exception) {
+  ServerException.fromDioException(Object exception, {BuildContext? context}) {
     if (exception is DioException) {
       message = switch (exception.type) {
         DioExceptionType.cancel => "",
-        DioExceptionType.connectionTimeout => "انتهت المهلة بسبب الاتصال",
-        DioExceptionType.sendTimeout => "انتهت المهلة أثناء الإرسال",
-        DioExceptionType.receiveTimeout => "انتهت المهلة أثناء الاستلام",
-        DioExceptionType.badResponse => _handleError(exception.response),
-        _ => exception.message.toString()
+        DioExceptionType.connectionTimeout => "connectionTimeout".tr(),
+        DioExceptionType.sendTimeout => "sendTimeout".tr(),
+        DioExceptionType.receiveTimeout => "receiveTimeout".tr(),
+        DioExceptionType.badResponse => _handleError(
+          exception.response,
+          context,
+        ),
+        _ => exception.message.toString(),
       };
 
       if (exception.type == DioExceptionType.unknown) {
         statusCode = 522;
-        message = "لا يوجد اتصال بالإنترنت";
+        message = "noInternetConnection".tr();
+      }
+      if (statusCode == 301 || statusCode == 302) {
+       showfailureToast( "pleaseCheckYourUrl".tr());
       }
     } else {
-      message = "خطأ غير متوقع";
+      message = "unexpectedError".tr();
     }
   }
 
-  String? message = "خطأ غير متوقع";
+  String? message = "unexpectedError".tr();
   int? statusCode;
 
-  String _handleError(Response<dynamic>? response) {
+  String _handleError(Response<dynamic>? response, BuildContext? context) {
     statusCode = response?.statusCode;
-    if (statusCode == 422) {
-      final responseData = response?.data;
-      if (responseData is Map<String, dynamic> &&
-          responseData.containsKey('message')) {
-        if(responseData['message'].toString() != "هذا المستخدم غير موجود."){
-          showfailureToast(responseData['message'].toString());
-        }
+
+    final responseData = response?.data;
+    final bodyCode =
+        (responseData is Map<String, dynamic>) ? responseData['code'] : null;
+
+    if (statusCode == 401 || bodyCode == 401 || statusCode == 404) {
+      if (context != null) {
+       showfailureToast( "sessionExpired".tr());
       }
+      return "sessionExpired".tr();
     }
-    if (statusCode == 400) {
-      final responseData = response?.data;
-      if (responseData is Map<String, dynamic> &&
-          responseData.containsKey('message')) {
-        showfailureToast(responseData['message'].toString());
-        return responseData['message'].toString();
+
+    if (statusCode == 400 &&
+        responseData is Map<String, dynamic> &&
+        responseData.containsKey('message')) {
+      if (context != null) {
+       showfailureToast(responseData['message']);
       }
+      return responseData['message'];
     }
+
+    if (statusCode == 422 &&
+        responseData is Map<String, dynamic> &&
+        responseData.containsKey('message')) {
+      showfailureToast( responseData['message']);
+      return responseData['message'];
+    }
+
     return switch (statusCode) {
-      401 => "انتهت الجلسة",
-      404 => "المورد غير موجود",
-      500 => "خطأ داخلي في الخادم",
-      _ => "خطأ غير متوقع"
+      404 => "resourceNotFound".tr(),
+      500 => "internalServerError".tr(),
+      _ => "unexpectedError".tr(),
     };
   }
 

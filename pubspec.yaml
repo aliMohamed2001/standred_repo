@@ -41,6 +41,7 @@ dependencies:
   shimmer: ^3.0.0
   url_launcher: ^6.3.1
   easy_localization: ^3.0.7+1
+  connectivity_plus: ^7.0.0
 
 dev_dependencies:
   flutter_test:
@@ -53,6 +54,7 @@ flutter:
   assets:
     - assets/images/
     - assets/svg/
+    - assets/translations/
 
   fonts:
     - family: DGAgnadeen
