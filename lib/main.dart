@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:new_standred/core/utils/app_constants.dart';
 import 'package:new_standred/no-internet/no_internet.dart';
 import 'package:new_standred/routes/app_routes.dart';
@@ -28,18 +29,25 @@ class MyApp extends StatelessWidget {
     return BlocProvider(
       create: (_) => ConnectivityCubit(),
       child: NoInternetHandler(
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Standard Repo',
-          locale: context.locale,
-          supportedLocales: context.supportedLocales,
-          localizationsDelegates: context.localizationDelegates,
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-            fontFamily: AppConstants.fontFamily,
-          ),
-          initialRoute: AppRoutes.splash,
-          onGenerateRoute: AppRoutes.generateRoute,
+        child: ScreenUtilInit(
+          designSize: const Size(375, 812),
+          minTextAdapt: true,
+          splitScreenMode: true,
+          builder: (context, child) {
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: 'Standard Repo',
+              locale: context.locale,
+              supportedLocales: context.supportedLocales,
+              localizationsDelegates: context.localizationDelegates,
+              theme: ThemeData(
+                primarySwatch: Colors.blue,
+                fontFamily: AppConstants.fontFamily,
+              ),
+              initialRoute: AppRoutes.splash,
+              onGenerateRoute: AppRoutes.generateRoute,
+            );
+          },
         ),
       ),
     );

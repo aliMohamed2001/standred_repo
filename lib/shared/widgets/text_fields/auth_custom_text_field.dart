@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:new_standred/core/utils/app_colors.dart';
 import 'package:new_standred/core/utils/styles.dart';
 
@@ -74,7 +75,7 @@ class _AuthTextFormFieldState extends State<AuthTextFormField> {
             textAlign: TextAlign.right,
           ),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: 8.h),
         SizedBox(
           width: double.infinity,
           child: Directionality(
@@ -94,32 +95,32 @@ class _AuthTextFormFieldState extends State<AuthTextFormField> {
                 ),
                 filled: true,
                 fillColor: AppColors.textColor.withOpacity(0.1),
-                contentPadding: const EdgeInsets.symmetric(
-                  vertical: 14.0,
-                  horizontal: 16.0,
+                contentPadding: EdgeInsets.symmetric(
+                  vertical: 14.h,
+                  horizontal: 16.w,
                 ),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(widget.borderRadius),
+                  borderRadius: BorderRadius.circular(widget.borderRadius.r),
                   borderSide: BorderSide.none,
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(widget.borderRadius),
-                  borderSide:  BorderSide(
+                  borderRadius: BorderRadius.circular(widget.borderRadius.r),
+                  borderSide: BorderSide(
                     color: AppColors.primaryColor,
-                    width: 1.5,
+                    width: 1.5.w,
                   ),
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(widget.borderRadius),
+                  borderRadius: BorderRadius.circular(widget.borderRadius.r),
                   borderSide: BorderSide.none,
                 ),
                 errorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(widget.borderRadius),
-                  borderSide: const BorderSide(color: Colors.redAccent),
+                  borderRadius: BorderRadius.circular(widget.borderRadius.r),
+                  borderSide: BorderSide(color: Colors.redAccent, width: 1.w),
                 ),
                 focusedErrorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(widget.borderRadius),
-                  borderSide: const BorderSide(color: Colors.redAccent),
+                  borderRadius: BorderRadius.circular(widget.borderRadius.r),
+                  borderSide: BorderSide(color: Colors.redAccent, width: 1.w),
                 ),
                 suffixIcon: widget.obscureText
                     ? IconButton(
@@ -143,7 +144,7 @@ class _AuthTextFormFieldState extends State<AuthTextFormField> {
                           )
                         : null,
                 isDense: true,
-                errorStyle: FontStyles.font14Weight400RightAligned.copyWith(color: Colors.red, fontSize: 12),
+                errorStyle: FontStyles.font14Weight400RightAligned.copyWith(color: Colors.red, fontSize: 12.sp),
               ),
               validator: widget.validator,
             ),

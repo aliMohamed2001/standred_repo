@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:new_standred/core/utils/app_colors.dart';
 import 'package:new_standred/core/utils/styles.dart';
 
@@ -32,26 +33,26 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: width ?? double.infinity,
-      height: height ?? 50,
+      height: height ?? 50.h,
       child: ElevatedButton(
         onPressed: isLoading ? null : onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: color ?? AppColors.actionButton,
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
           shape: RoundedRectangleBorder(
             side: BorderSide(color: textColor ?? Colors.white),
-            borderRadius: BorderRadius.circular(borderRadius ?? 12),
+            borderRadius: BorderRadius.circular((borderRadius ?? 12).r),
           ),
           elevation: 1,
           shadowColor: AppColors.actionButton.withOpacity(0.3),
         ),
         child: isLoading
-            ? const SizedBox(
-                height: 20,
-                width: 20,
+            ? SizedBox(
+                height: 20.h,
+                width: 20.w,
                 child: CircularProgressIndicator(
                   color: Colors.white,
-                  strokeWidth: 2,
+                  strokeWidth: 2.w,
                 ),
               )
             : FittedBox(
@@ -63,9 +64,9 @@ class CustomButton extends StatelessWidget {
                       Icon(
                         icon,
                         color: iconColor ?? Colors.white,
-                        size: 20,
+                        size: 20.sp,
                       ),
-                      const SizedBox(width: 8),
+                      SizedBox(width: 8.w),
                     ],
                     Text(
                       text,

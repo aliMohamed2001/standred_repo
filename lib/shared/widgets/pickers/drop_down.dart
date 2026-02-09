@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:new_standred/core/utils/styles.dart';
 
 class DropDownCustomTextfailed extends StatefulWidget {
@@ -66,36 +67,36 @@ class _DropDownCustomTextfailedState extends State<DropDownCustomTextfailed> {
                     _isDropdownOpen ? Icons.arrow_drop_up : Icons.arrow_drop_down,
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+                    borderRadius: BorderRadius.circular(10.r),
                     borderSide: BorderSide(
                       color: _isDropdownOpen ? Colors.green : Colors.grey,
-                      width: 1.0,
+                      width: 1.w,
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: const BorderSide(
-                      width: 2.0,
+                    borderRadius: BorderRadius.circular(10.r),
+                    borderSide: BorderSide(
+                      width: 2.w,
                     ),
                   ),
-                  contentPadding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
+                  contentPadding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 20.w),
                 ),
               ),
             ),
           ),
           if (_isDropdownOpen && widget.dropdownItems != null)
             Container(
-              width: MediaQuery.of(context).size.width,
-              margin: const EdgeInsets.only(top: 12.0),
+              width: 1.sw,
+              margin: EdgeInsets.only(top: 12.h),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(10.0),
+                borderRadius: BorderRadius.circular(10.r),
                 border: Border.all(color: _isDropdownOpen ? Colors.grey.shade300 : Colors.green),
               ),
-              child: Container(
-                height: 200, 
+              child: SizedBox(
+                height: 200.h, 
                 child: ListView.builder(
-                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  padding: EdgeInsets.symmetric(vertical: 10.h),
                   itemCount: widget.dropdownItems!.length,
                   itemBuilder: (context, index) {
                     String item = widget.dropdownItems![index];
@@ -112,12 +113,12 @@ class _DropDownCustomTextfailedState extends State<DropDownCustomTextfailed> {
                         });
                       },
                       child: Container(
-                        padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
+                        padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 20.w),
                         color: isSelected ? const Color(0XFFDDE4DE) : Colors.transparent,
                         child: Text(
                           item,
                           textAlign: TextAlign.right,
-                          style: FontStyles.font16Weight400Text.copyWith(fontSize: 15.0),
+                          style: FontStyles.font16Weight400Text.copyWith(fontSize: 15.sp),
                         ),
                       ),
                     );

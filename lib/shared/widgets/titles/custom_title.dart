@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:new_standred/core/utils/app_colors.dart';
 import 'package:new_standred/core/utils/styles.dart';
 import 'package:new_standred/shared/animations/animation_utils.dart';

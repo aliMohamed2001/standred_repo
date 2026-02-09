@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 void showSuccessToast(String message) {
@@ -10,7 +11,7 @@ void showSuccessToast(String message) {
       timeInSecForIosWeb: 1,
       backgroundColor: Colors.green,
       textColor: Colors.white,
-      fontSize: 14.0);
+      fontSize: 14.sp);
 }
 
 void showfailureToast(String message) {
@@ -22,5 +23,5 @@ void showfailureToast(String message) {
       timeInSecForIosWeb: 1,
       backgroundColor: Colors.red,
       textColor: Colors.white,
-      fontSize: 14.0);
+      fontSize: 14.sp);
 }
